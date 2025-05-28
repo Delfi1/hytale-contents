@@ -25,3 +25,15 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.mainbox {
+  width: 100%;
+  justify-items: center;
+  padding: 10px;
+}
+
+button.download {
+  width: 100%;
+  align-content: center;
+  margin: 10px 0px 0px 0px;
+}
