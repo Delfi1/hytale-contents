@@ -16,7 +16,7 @@ class Logger:
     def error(self, msg):
         print(msg)
 
-@app.route('/api/download', methods=["POST"])
+@app.route('/api/download', methods=["GET", "POST"])
 def download():
     src = request.args.get('src')
     ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()

@@ -1,13 +1,17 @@
 'use client'
 
 import { useState } from 'react';
+import Loader from './loader';
 
 export default function Downloader() {
   const [src, setSrc] = useState('');
   const [errMsg, setErrMsg] = useState('');
+  const [loading, setLoading] = useState(false);
 
   async function handleClick() {
     console.log("Downloading...");
+    setLoading(true);
+
     // Clear error msg
     setErrMsg('');
 
@@ -31,14 +35,18 @@ export default function Downloader() {
     } else {
       setErrMsg(await response.text());
     }
+
+    setLoading(false);
   }
 
   return (
     <div className='downloadBox'>
-      <div className='downloader'>
+      <div aria-disabled={loading} className='downloader'>
         <div className='src'><input value={src} onChange={(e) => setSrc(e.target.value)} /></div>
         <button onClick={handleClick} className='download'>Download</button>
       </div>
+      <Loader loading={loading} />
+
       <h2 className='errorMsg'>{errMsg}</h2>
     </div>
   )
