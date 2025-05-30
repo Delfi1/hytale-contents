@@ -28,12 +28,38 @@ body {
 
 .mainbox {
   width: 100%;
-  justify-items: center;
   padding: 10px;
+  justify-items: center;
 }
 
-button.download {
+.downloadBox {
+  width: 100%;
+  justify-items: center;
+}
+
+.downloader {
+  width: 400px;
+}
+
+.downloader button {
   width: 100%;
   align-content: center;
   margin: 10px 0px 0px 0px;
+}
+
+.downloader .src {
+  color: black;
+  width: 100%;
+  border: white;
+  background-color: white;
+  padding: "0px 10px 0px 10px";
+}
+
+.downloader .src input {
+  width: 100%;
+  text-align: center;
+}
+
+.errorMsg {
+  color: brown;
 }

@@ -4,20 +4,42 @@ import { useState } from 'react';
 
 export default function Downloader() {
   const [src, setSrc] = useState('');
+  const [errMsg, setErrMsg] = useState('');
 
   async function handleClick() {
     console.log("Downloading...");
+    // Clear error msg
+    setErrMsg('');
 
-    const link: HTMLAnchorElement = document.createElement('a');
-    link.href = `/api/yt_dlp/download?src=${src}`;
-    link.click();
-    link.remove();
+    let current = src;
+    let response = await fetch(`/api/download?src=${current}`, {
+      method: 'POST',
+      headers: { Accept: 'video/mp4' },
+    });
+    
+    if (response.ok) {
+      let blob = await response.blob();
+      let url = URL.createObjectURL(blob);
+
+      let link: HTMLAnchorElement = document.createElement('a');
+      link.href = url;
+      link.download = `${current}.mp4`;
+      link.click();
+
+      URL.revokeObjectURL(url);
+      link.remove();
+    } else {
+      setErrMsg(await response.text());
+    }
   }
 
   return (
-    <div>
-      <div><input value={src} style={{ 'border': "white", color: "black", padding: "0px 10px 0px 10px" }} onChange={(e) => setSrc(e.target.value)} /></div>
-      <button onClick={handleClick} className='download'>Download</button>
+    <div className='downloadBox'>
+      <div className='downloader'>
+        <div className='src'><input value={src} onChange={(e) => setSrc(e.target.value)} /></div>
+        <button onClick={handleClick} className='download'>Download</button>
+      </div>
+      <h2 className='errorMsg'>{errMsg}</h2>
     </div>
   )
 }
